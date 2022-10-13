@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/productos', (req, res) => {
-  res.json(productos.getAll())
+  res.json(products.getAll())
 })
 
 app.get('/productoRandom', async (req, res) => {
