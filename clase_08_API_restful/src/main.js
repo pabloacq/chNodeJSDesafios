@@ -51,8 +51,7 @@ rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
     await getProductContainer().save(producto)
     res.send(producto)
   } catch (error) {
-    console.log(error)
-    res.send(error)
+    res.status(error.status || 500).send(error)
   }
 })
 

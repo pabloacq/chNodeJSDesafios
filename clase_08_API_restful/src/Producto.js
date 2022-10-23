@@ -3,7 +3,7 @@ class Producto {
     this.title = title
     this.price = Number(price || undefined)
     this.thumbnail = thumbnail
-    this.id = Number(id)
+    this.id = id ? Number(id) : id
 
     this.isValid()
 
