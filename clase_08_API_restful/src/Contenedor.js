@@ -76,8 +76,12 @@ class Contenedor{
   async update(object){
     let fileContent = await this.getAll()
     const objectIndex = fileContent.findIndex(element => element.id == object.id)
+    if (objectIndex < 0){
+      throw {status:422, message:'ID no encontrado'}
+    }
     fileContent.splice(objectIndex,1,object)
     await writeToFile(fileContent, this.fileName)
+    return object
   }
 }
 

@@ -59,8 +59,8 @@ rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
 rutaProductos.put('/:id', async (req, res) => {
   try {
     const producto = new Producto({ ...req.body, id: req.params.id })
-    await getProductContainer().update(producto)
-    res.send(getProductContainer().getAll())
+    const productoReturn = await getProductContainer().update(producto)
+    res.send(productoReturn)
   } catch (error) {
     res.status(error.status || 500).send(error)
   }
