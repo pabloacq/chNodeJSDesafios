@@ -3,6 +3,7 @@ const Utils = require('./Utils')
 const Producto = require('./Producto')
 const express = require('express')
 const multer = require('multer')
+const { restart } = require('nodemon')
 const app = express()
 
 const PORT = 8080
@@ -66,9 +67,17 @@ rutaProductos.put('/:id', async (req, res) => {
 })
 
 rutaProductos.delete('/:id', async (req, res) => {
-  const ID = req.params.id
-  const product = await getProductContainer().deleteById(ID)
-  res.json(product)
+  try {
+    const ID = req.params.id
+    if (!Producto.isValidID(ID)) {
+      res.status(400).send({ error: "ID no valido" })
+      return
+    }
+    const product = await getProductContainer().deleteById(ID)
+    res.json(product || "prod no encontrado")
+  } catch (error) {
+    res.status(error.status || 500).send(error)
+  }
 })
 
 app.use('/api/productos', rutaProductos)
