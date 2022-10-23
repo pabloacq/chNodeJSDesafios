@@ -1,6 +1,6 @@
-class Producto{
-  constructor({title, price, thumbnail, id=undefined}){
-    this.title= title
+class Producto {
+  constructor({ title, price, thumbnail, id = undefined }) {
+    this.title = title
     this.price = Number(price || undefined)
     this.thumbnail = thumbnail
     this.id = Number(id)
@@ -9,16 +9,15 @@ class Producto{
 
   }
 
-  isValid(){
-   if (this.title.length < 1) throw 'title invalido'
-   if (isNaN(this.price)) throw 'precio invalido'
+  isValid() {
+    if (this.title.length < 1) throw 'title invalido'
+    if (isNaN(this.price)) throw 'precio invalido'
+    if (this.id != undefined && isNaN(this.id)) throw {status:400, message:'ID no valido'}
   }
 
-  static isValidID(id){
+  static isValidID(id) {
     return isNaN(id)
   }
 }
-
-
 
 module.exports = Producto

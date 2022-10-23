@@ -43,7 +43,7 @@ rutaProductos.get('/:id', async (req, res) => {
 
 rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
   try {
-    const producto = new Producto({...req.body, thumbnail:req.file.path})
+    const producto = new Producto({ ...req.body, thumbnail: req.file.path })
     await getProductContainer().save(producto)
     res.send(producto)
   } catch (error) {
@@ -52,10 +52,14 @@ rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
   }
 })
 
-rutaProductos.put('/', async (req, res) => {
-  const producto = new Producto(req.body)
-  await getProductContainer().update(producto)
-  res.send(getProductContainer().getAll())
+rutaProductos.put('/:id', async (req, res) => {
+  try {
+    const producto = new Producto({ ...req.body, id: req.params.id })
+    await getProductContainer().update(producto)
+    res.send(getProductContainer().getAll())
+  } catch (error) {
+    res.status(error.status || 500).send(error)
+  }
 })
 
 rutaProductos.delete('/:id', async (req, res) => {
