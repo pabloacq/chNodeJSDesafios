@@ -13,6 +13,10 @@ class Producto{
    if (this.title.length < 1) throw 'title invalido'
    if (isNaN(this.price)) throw 'precio invalido'
   }
+
+  static isValidID(id){
+    return isNaN(id)
+  }
 }
 
 
