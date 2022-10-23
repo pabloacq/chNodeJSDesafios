@@ -12,14 +12,6 @@ app.use(express.static('public'))
 
 const rutaProductos = express.Router()
 
-// const storage = multer.diskStorage({
-//   dest: './uploads',
-//   filename: function (req, file, next) {
-//     console.log("sarasa")
-//     next(null, `${Date.now()}-${file.originalname}`)
-//   }
-// })
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads')
@@ -46,10 +38,14 @@ rutaProductos.get('/:id', async (req, res) => {
 })
 
 rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
-  const producto = new Producto({...req.body, thumbnail:req.file.path})
-  console.log(producto)
-  await getProductContainer().save(producto)
-  res.send(producto)
+  try {
+    const producto = new Producto({...req.body, thumbnail:req.file.path})
+    await getProductContainer().save(producto)
+    res.send(producto)
+  } catch (error) {
+    console.log(error)
+    res.send(error)
+  }
 })
 
 rutaProductos.put('/', async (req, res) => {

@@ -1,1 +1,20 @@
-[{"title":"Comida para gatos","price":500,"thumbnail":"no-img.png","id":1},{"title":"Comida para perros","price":300,"thumbnail":"no-img.png","id":2},{"title":"Comida para hamsters","price":400,"thumbnail":"no-img.png","id":3}]
+[
+    {
+        "title": "Comida para gatos",
+        "price": 500,
+        "thumbnail": "no-img.png",
+        "id": 1
+    },
+    {
+        "title": "Comida para perros",
+        "price": 300,
+        "thumbnail": "no-img.png",
+        "id": 2
+    },
+    {
+        "title": "Comida para hamsters",
+        "price": 400,
+        "thumbnail": "no-img.png",
+        "id": 3
+    }
+]
