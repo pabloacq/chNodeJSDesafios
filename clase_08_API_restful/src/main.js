@@ -74,7 +74,7 @@ rutaProductos.delete('/:id', async (req, res) => {
       return
     }
     const product = await getProductContainer().deleteById(ID)
-    res.json(product || "prod no encontrado")
+    res.json(product)
   } catch (error) {
     res.status(error.status || 500).send(error)
   }

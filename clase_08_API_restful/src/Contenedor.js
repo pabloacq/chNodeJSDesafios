@@ -59,12 +59,12 @@ class Contenedor{
     let deletedRecord = {}
     let fileContent = this.getAll()
     const indexToDelete = fileContent.findIndex(element => element.id == id)
-    
-    if (indexToDelete > -1){
-      deletedRecord = fileContent.splice(indexToDelete,1)[0]
-      await writeToFile(fileContent, this.fileName)
+    if (indexToDelete < 0){
+      throw {status:422, message:'ID no encontrado'}
     }
 
+    deletedRecord = fileContent.splice(indexToDelete,1)[0]
+    await writeToFile(fileContent, this.fileName)
     return deletedRecord
   }
 
