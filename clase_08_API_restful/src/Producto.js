@@ -10,13 +10,13 @@ class Producto {
   }
 
   isValid() {
-    if (this.title.length < 1) throw 'title invalido'
-    if (isNaN(this.price)) throw 'precio invalido'
+    if (this.title.length < 1) throw {status:400, message:'title invalido'}
+    if (isNaN(this.price)) throw {status:400, message:'precio invalido'}
     if (this.id != undefined && isNaN(this.id)) throw {status:400, message:'ID no valido'}
   }
 
   static isValidID(id) {
-    return isNaN(id)
+    return !isNaN(id)
   }
 }
 

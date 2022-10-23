@@ -33,12 +33,16 @@ rutaProductos.get('/', (req, res) => {
 
 rutaProductos.get('/:id', async (req, res) => {
   const ID = req.params.id
-  if (Producto.isValidID(ID)) {
-    res.status(400).send({ error: "Producto no encontrado" })
-    return
+  try {
+    if (!Producto.isValidID(ID)) {
+      res.status(400).send({ error: "ID no valido" })
+      return
+    }
+    const product = await getProductContainer().getByID(ID)
+    res.status(product ? 200 : 404).send(product || { error: "Producto no encontrado" })
+  } catch (error) {
+    return res.status(error.status || 500).send(error)
   }
-  const product = await getProductContainer().getByID(ID)
-  res.status(product ? 200 : 404).send(product || { error: "Producto no encontrado" })
 })
 
 rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
