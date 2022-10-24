@@ -79,9 +79,14 @@ class Contenedor{
     if (objectIndex < 0){
       throw {status:422, message:'ID no encontrado'}
     }
-    fileContent.splice(objectIndex,1,object)
+    const dbObject = fileContent[objectIndex]
+    Object.keys(dbObject).forEach(key => {
+      dbObject[key] = typeof object[key] !== 'undefined' ? object[key] : dbObject[key]
+    })
+
+    fileContent.splice(objectIndex,1,dbObject)
     await writeToFile(fileContent, this.fileName)
-    return object
+    return dbObject
   }
 }
 

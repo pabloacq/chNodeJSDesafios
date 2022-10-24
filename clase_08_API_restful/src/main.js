@@ -13,16 +13,16 @@ app.use(express.static('public'))
 
 const rutaProductos = express.Router()
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './uploads')
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname)
+//   }
+// })
 
-const upload = multer({ storage: storage })
+// const upload = multer({ storage: storage })
 
 function getProductContainer() {
   return new Contenedor('productos.json')
@@ -46,9 +46,9 @@ rutaProductos.get('/:id', async (req, res) => {
   }
 })
 
-rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
+rutaProductos.post('/', (req, res, next) => {upload(req,res,next)}, async (req, res) => {
   try {
-    const producto = new Producto({ ...req.body, thumbnail: req.file.path })
+    const producto = new Producto({ ...req.body, thumbnail: req.file ? req.file.path : "no-img.jpg" })
     await getProductContainer().save(producto)
     res.send(producto)
   } catch (error) {
@@ -56,9 +56,9 @@ rutaProductos.post('/', upload.single('thumbnail'), async (req, res) => {
   }
 })
 
-rutaProductos.put('/:id', async (req, res) => {
+rutaProductos.put('/:id', (req, res, next) => {upload(req,res,next)}, async (req, res) => {
   try {
-    const producto = new Producto({ ...req.body, id: req.params.id })
+    const producto = new Producto({ ...req.body, thumbnail: req.file ? req.file.path : undefined, id: req.params.id })
     const productoReturn = await getProductContainer().update(producto)
     res.send(productoReturn)
   } catch (error) {
@@ -79,6 +79,20 @@ rutaProductos.delete('/:id', async (req, res) => {
     res.status(error.status || 500).send(error)
   }
 })
+
+function upload(req, res, next) {
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+  
+  const upload = multer({ storage: storage })
+  upload.single('thumbnail')(req,res,next)
+}
 
 app.use('/api/productos', rutaProductos)
 
