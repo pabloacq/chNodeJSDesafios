@@ -1,5 +1,5 @@
 const Contenedor = require('../../Contenedor')
-const Producto = require('../../Producto')
+const Producto = require('../../controllers/Producto')
 const multer = require('multer')
 const express = require('express')
 
