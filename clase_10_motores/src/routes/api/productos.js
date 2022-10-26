@@ -1,7 +1,8 @@
 const Contenedor = require('../../Contenedor')
-const Producto = require('../../controllers/Producto')
+const Producto = require('../../Producto')
 const multer = require('multer')
 const express = require('express')
+
 
 const rutaProductos = express.Router()
 
@@ -12,7 +13,7 @@ function getProductContainer() {
 function upload(req, res, next) {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './uploads')
+      cb(null, 'public/uploads')
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname)
@@ -43,9 +44,10 @@ rutaProductos.get('/:id', async (req, res) => {
 
 rutaProductos.post('/', (req, res, next) => {upload(req,res,next)}, async (req, res) => {
   try {
-    const producto = new Producto({ ...req.body, thumbnail: req.file ? req.file.path : "default.jpg" })
+    const thumbnail = req.file ? req.file.path.replace('public/', '/') : "default.jpg"
+    const producto = new Producto({ ...req.body, thumbnail: thumbnail })
     await getProductContainer().save(producto)
-    res.send(producto)
+    res.redirect('/')
   } catch (error) {
     res.status(error.status || 500).send(error)
   }

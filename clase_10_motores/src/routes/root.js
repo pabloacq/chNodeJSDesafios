@@ -5,11 +5,17 @@ const express = require('express')
 const rutaRoot = express.Router()
 
 rutaRoot.get('/', (req, res) => {
-    const data = {
-      titulo: 'Hello World!',
-      mensaje: 'Hello World message!',
-    };
-    res.render('index', data);
-  });
+  res.render('index');
+});
+
+rutaRoot.get('/productos', (req, res) => {
+  const productos = new Contenedor('productos.json').getAll()
+  const data = {
+    productos: productos
+  };
+  res.render('productos', data);
+});
+
+
 
 module.exports = rutaRoot
