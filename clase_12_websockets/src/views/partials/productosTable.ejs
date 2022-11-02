@@ -1,0 +1,29 @@
+<% 
+  try{
+    productos = productos
+  }
+  catch{
+    productos = []
+  }
+
+%> 
+
+<% if (productos.length > 0) { %>
+
+<div>
+  <div class="d-flex flex-column">
+    <div class="row flex-row border-bottom border-secondary">
+      <div class="col-1"><span>ID</span></div>
+      <div class="col-8"><span>Title</span></div>
+      <div class="col-1"><span>Price</span></div>
+      <div class="col-1"><span>Thumbnail</span></div>
+    </div>
+      <% productos.forEach(producto => { %>
+        <%- include('productoRow.ejs',{producto: producto}) %>
+      <% }) %>
+    </div>
+  </div>
+  <% } else { %>
+  <p>No hay productos</p>
+  <% } %>
+</div>

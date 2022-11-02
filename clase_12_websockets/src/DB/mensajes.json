@@ -1,0 +1,38 @@
+[
+  {
+    "sender": "elchipi@coderhouse.com",
+    "text": "Hola!",
+    "timeStamp": "30/10/2022 15:03:00",
+    "id": 1
+  },
+  {
+    "sender": "elchipi@coderhouse.com",
+    "text": "Como estan?",
+    "timeStamp": "30/10/2022 15:03:03",
+    "id": 2
+  },
+  {
+    "sender": "martin@coderhouse.com",
+    "text": "Buenas Tardes",
+    "timeStamp": "01/11/2022 18:54:14",
+    "id": 3
+  },
+  {
+    "sender": "roman@coderhouse.com",
+    "text": "Estoy feliz!",
+    "timeStamp": "02/11/2022 09:02:28",
+    "id": 4
+  },
+  {
+    "sender": "guillermo@coderhouse.com",
+    "text": "Chau!",
+    "timeStamp": "02/11/2022 09:10:28",
+    "id": 5
+  },
+  {
+    "sender": "carlitos@coderhouse.com",
+    "text": "It's very difficult",
+    "timeStamp": "02/11/2022 10:11:07",
+    "id": 6
+  }
+]
