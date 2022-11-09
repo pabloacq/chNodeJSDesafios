@@ -4,7 +4,7 @@ import {Repository, iEntity} from './Repository'
     id?: string | undefined
     nombre: string
     descripcion: string
-    timestamp?: Date
+    timestamp?: number | string
     codigo?: string
     foto?: string
     precio?: number
@@ -21,7 +21,8 @@ import {Repository, iEntity} from './Repository'
       codigo: {type:"string"},
       precio: { type: "number" },
       foto: { type: "string" },
-      stock: {type: "number"}
+      stock: {type: "number"},
+      timestamp: {type: ["number", "string"]}
     },
     required: ["nombre", "descripcion"]
   }

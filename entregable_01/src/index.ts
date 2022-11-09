@@ -1,26 +1,12 @@
-import {ProductRepo, iProduct} from './models/Product'
+import { HTTPServer } from "./services/server";
+import { AddressInfo } from "net";
+const PORT = 8080;
 
-const productRepo = new ProductRepo();
+const appServer = HTTPServer.listen(PORT, () => {
+  const addressInfo = appServer.address() as AddressInfo;
+  console.log(`Servidor http escuchando en el puerto ${addressInfo.port}`);
+});
 
+appServer.on("error", (error) => console.log(`Error en el servidor ${error}`));
 
- (async function() {
-    try {
-        await productRepo.save({nombre:"nombre de prod", descripcion:"descripcion de prod"});
-        console.log("Save OK!")
-    } catch (error) {
-        console.log("Save FAIL!")
-    }
-
-const prodByID = await productRepo.getByID('98c9573a-ac18-4816-a50c-a12247cccef5')
-console.log(prodByID.descripcion ? "ProdByID OK!": "ProdByID FAIL!")
-console.log( (await productRepo.getAll()).length>0 ? "GetAll() OK!" : "getAll() FAIL!")
-
-console.log(prodByID.nombre)
-prodByID.nombre = "Nombre cambiado4"
-await productRepo.update(prodByID)
-
-const prodByID2 = await productRepo.getByID('98c9573a-ac18-4816-a50c-a12247cccef5')
-
-console.log(prodByID2.nombre)
- })();
-
+console.log(appServer.rawListeners('get'))

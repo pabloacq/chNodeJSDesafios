@@ -1,16 +1,15 @@
-const fs = require('fs')
+import fs from 'fs'
 import { v4 as uuidv4 } from 'uuid';
 
 export interface containerElement{
     id?: string
 }
 
-class Contenedor {
+class Contenedor <T extends containerElement>{
     fileName: string
     defaultFileContent: Array<JSON> = []
-
     constructor(filename: string) {
-        this.fileName = `${filename}.json`
+        this.fileName = `${__dirname}/../../${filename}.json`
         this.defaultFileContent = new Array
     }
 
@@ -18,7 +17,7 @@ class Contenedor {
         return fs.promises.writeFile(fileName, JSON.stringify(fileContent))
     }
 
-    async save(object:any):Promise<containerElement> {
+    async save(object:any):Promise<T> {
         let fileContent: Array<object> = new Array
         try {
             object.id = uuidv4()
@@ -56,8 +55,8 @@ class Contenedor {
         return this.getAll().length
     }
 
-    async deleteById(id:string):Promise<containerElement> {
-        let deletedRecord: containerElement = {}
+    async deleteById(id:string):Promise<T> {
+        let deletedRecord: T
         let fileContent = this.getAll()
         const indexToDelete = fileContent.findIndex((element:containerElement) => element.id == id)
         if (indexToDelete < 0) {
@@ -74,20 +73,17 @@ class Contenedor {
         await this.writeToFile(fileContent, this.fileName)
     }
 
-    async update(object: containerElement) {
+    async update(object: T) {
         let fileContent = await this.getAll()
-        const objectIndex = fileContent.findIndex((element:containerElement) => element.id == object.id)
+        const objectIndex = fileContent.findIndex((element:T) => element.id == object.id)
         if (objectIndex < 0) {
             throw { status: 422, message: 'ID no encontrado' }
         }
-        const dbObject = fileContent[objectIndex]
-        Object.keys(dbObject).forEach(key => {
-            dbObject[key] = typeof object[key as keyof object] !== 'undefined' ? object[key as keyof object] : dbObject[key]
-        })
 
-        fileContent.splice(objectIndex, 1, dbObject)
+        fileContent.splice(objectIndex, 1, object)
+        
         await this.writeToFile(fileContent, this.fileName)
-        return dbObject
+        return object
     }
 }
 
