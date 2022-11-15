@@ -18,16 +18,18 @@ rutaCart.post("/", async (req, res) => {
 rutaCart.post("/:id/productos/:id_prod", async (req, res) => {
   try {
     await cartController.addItemToCart(req.params.id_prod, req.params.id, productController)
-    res.status(200).send()
+    res.status(200).send({mensaje:"Producto agregado correctamente"})
   } catch (error: any) {
     res.status(error.status || 500).send(error);
   }
 });
 
-rutaCart.get("/:id/productos", async (req, res) => {
+rutaCart.get("/:id", async (req, res) => {
   try {
     console.log("trying....")
     const productos = await cartController.getItemsFromCart(req.params.id, productController)
+    console.log("productos")
+    console.log(productos.length)
     console.log(productos);
     
     res.status(200).send(productos)
