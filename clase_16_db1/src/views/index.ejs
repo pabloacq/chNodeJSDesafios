@@ -1,0 +1,32 @@
+<%- include('partials/head.ejs') %> 
+
+<body>
+
+  <a class="btn btn-primary" href="/productos" role="button">Productos</a>
+  <br>
+  
+<div class="container">
+  <form id="formProducto" enctype="multipart/form-data" method="post" action="/api/productos">
+    <label for="title">Nombre:</label><br>
+    <input type="text" id="title" name="title" placeholder="Nombre del Producto"><br>
+    <label for="price">Precio:</label><br>
+    <input type="text" id="price" name="price" placeholder="999"><br><br>
+    <label for="thumbnail">Thumbnail:</label><br>
+    <input type="file" id="thumbnail" name="thumbnail"><br><br>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+<div id="productsTable" class="container"></div>
+<div class="container border p-3">
+  <%- include('partials/chat.ejs') %> 
+</div>
+
+<script src="https://unpkg.com/validator@latest/validator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/cliente.js"></script>
+<script src="/js/chat.js"></script>
+</body>
+</html>
+
+
