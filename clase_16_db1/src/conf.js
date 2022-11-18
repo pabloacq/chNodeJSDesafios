@@ -8,12 +8,27 @@ const mariaDB = {
     }
 }
 
+// const sqlite3 = {
+//     client: 'sqlite3',
+//     connection: {
+//         filename: `${__dirname}/DB/mensajes.sqlite`
+//     },
+//     useNullAsDefault:true
+// }
+
+// const sqlite3 = {
+//     client: 'sqlite3',
+//     connection: `${__dirname}/DB/mensajes.sqlite`,
+//     useNullAsDefault:true
+// }
+
 const sqlite3 = {
     client: 'sqlite3',
     connection: {
-        filename: `${__dirname}/DB/mensajes.sqlite`
+      dirname: `${__dirname}/DB`,
+      filename: `${__dirname}/DB/mensajes.sqlite`,
     },
-    useNullAsDefault:true
-}
+    useNullAsDefault: true
+  };
 
 module.exports = {mariaDB, sqlite3}

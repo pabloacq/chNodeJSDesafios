@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Comida para gatos",
+        "price": 400,
+        "thumbnail": "/uploads/catf-1.png",
+        "id": 1
+    },
+    {
+        "title": "Comida para perros",
+        "price": 2000,
+        "thumbnail": "/uploads/descarga.png",
+        "id": 2
+    },
+    {
+        "title": "Prod",
+        "price": 232,
+        "thumbnail": "/uploads/1864514.png",
+        "id": 3
+    },
+    {
+        "title": "Producto 2",
+        "price": 3245,
+        "thumbnail": "/uploads/catf-1.png",
+        "id": 4
+    },
+    {
+        "title": "Producto 3",
+        "price": 456,
+        "thumbnail": "/uploads/1864514.png",
+        "id": 5
+    },
+    {
+        "title": "Producto 4",
+        "price": 567,
+        "thumbnail": "/uploads/catf-1.png",
+        "id": 6
+    },
+    {
+        "title": "Producto 5",
+        "price": 3232,
+        "thumbnail": "/uploads/1864514.png",
+        "id": 7
+    }
+]
