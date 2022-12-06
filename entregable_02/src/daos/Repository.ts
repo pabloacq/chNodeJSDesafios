@@ -8,12 +8,14 @@ const ajv = new Ajv();
 type validationResult = { valid: boolean, errors?: ErrorObject[] | null | undefined }
 
 export interface iEntity extends iContainerElement{ 
-  timestamp?: number | string
+  timestamp?: number | string,
+  _id?: string
 }
 
 export abstract class Repository<T extends iEntity> {
     private schema = {}
     private contenedor
+
     constructor(schema: object,ctor:iContainerConstructor<T>,name:string ) {
         this.schema = JSON.parse(JSON.stringify(schema))
         this.contenedor = new ctor(name, schema)
@@ -48,6 +50,16 @@ export abstract class Repository<T extends iEntity> {
 
     async update(ent: T):Promise<T>{
       let validationData
+
+      console.debug(`Repository.update: Using schema ${JSON.stringify(this.schema)}`)
+      
+      if (ent._id){
+        ent._id = ent._id?.toString()
+      }
+      
+
+      console.log(`${typeof ent._id}`)
+      
       console.debug(`Validating ${JSON.stringify(ent)}`)
       try {
         validationData = await this.isValid(ent)
@@ -57,6 +69,7 @@ export abstract class Repository<T extends iEntity> {
       }
       
       if (validationData==undefined || !(validationData == undefined) && !validationData.valid){
+        console.log(`ID: ${ent._id as string} TypeOf: ${typeof ent._id}`)
         console.debug(`ENT Invalid ${JSON.stringify(validationData?.errors)}`)
         console.debug(`${JSON.stringify(ent)}`)
         console.debug(`Schema: ${JSON.stringify(this.schema)}`)

@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import {iContainerElement, iContenedor} from './Store'
 
 import {mongoDbConnectionString as connectionString} from '../config'
-               
+
 export default class Contenedor<T extends iContainerElement> implements iContenedor<T> {
     private connectionString = connectionString
     private schema: mongoose.Schema<object>
@@ -11,6 +11,7 @@ export default class Contenedor<T extends iContainerElement> implements iContene
 
     constructor(collection: string, schema: any) {
         this.initMongodb()
+        console.log(`Schema received at mongoStore${JSON.stringify(schema)}`)
         const newSchema = {...schema}
         delete newSchema.properties['_id']
         this.schema = new mongoose.Schema(newSchema.properties, { "timestamps": true })
@@ -67,28 +68,28 @@ export default class Contenedor<T extends iContainerElement> implements iContene
     }
 
     async update(object:any):Promise<T>{
-        console.log(JSON.stringify(object))
+        console.log(`Object received at update: ${JSON.stringify(object)}`)
         object.timestamp="000000"
-        const a =  await this.model.findOneAndUpdate({_id:object._id}, {...object})
+        const a =  await this.model.findOneAndUpdate({_id:object._id}, {...object}, {new:true})
         console.log(`Update: ${JSON.stringify(a)}`)
         return a as T
     }
 }
 
 
-const schema = {
-    // type: "object",
-    // additionalProperties: false,
-    properties: {
-        _id: { "type": "string", "required": false },
-        nombre: { type: "string", "required": true },
-        descripcion: { type: "string", "required": true },
-        codigo: { type: "string" },
-        precio: { type: "number" },
-        foto: { type: "string" },
-        stock: { type: "number" },
-    }
-}
+// const schema = {
+//     // type: "object",
+//     // additionalProperties: false,
+//     properties: {
+//         _id: { "type": "string", "required": false },
+//         nombre: { type: "string", "required": true },
+//         descripcion: { type: "string", "required": true },
+//         codigo: { type: "string" },
+//         precio: { type: "number" },
+//         foto: { type: "string" },
+//         stock: { type: "number" },
+//     }
+// }
 
 
 

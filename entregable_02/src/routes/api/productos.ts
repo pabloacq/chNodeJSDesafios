@@ -18,17 +18,23 @@ function preventNonAdmin(req: Request, res: Response, next: NextFunction ){
 rutaProductos.get("/:id?", async (req: Request, res: Response) => {
   let resData = {};
   let status = 200
-  if (req.params.id) {
-    resData = await productController.getByID(req.params.id);
-    if(!resData) {
-      resData = {mensaje:"Producto no encontrado"}
-      status = 404
-    } 
-  } else {
-    resData = await productController.getAll();
+  try {
+    if (req.params.id) {
+      resData = await productController.getByID(req.params.id);
+      if(!resData) {
+        resData = {mensaje:"Producto no encontrado"}
+        status = 404
+      } 
+    } else {
+      resData = await productController.getAll();
+    }
+    res.status(status).json(resData);  
+  } catch (error:any) {
+    console.error(error.message || error)
+    res.status(error.status || 500).send()
   }
-
-  res.status(status).json(resData);
+  
+  
 });
 
 rutaProductos.post("/",preventNonAdmin, async (req, res) => {

@@ -28,7 +28,7 @@ rutaCart.get("/:id", async (req, res) => {
   try {
     console.debug(`Get:Carrito(/:id) ${JSON.stringify(req.params)}`)
     const productos = await cartController.getItemsFromCart(req.params.id, productController)
-    console.debug(`Get:Carrito(/:id) - END #${productos.length} - ${JSON.stringify(productos)}`)
+    console.debug(`Get:Carrito(/:id) - END - returning ${productos.length} results`)
     
     res.status(200).send(productos)
   } catch (error: any) {
