@@ -68,7 +68,6 @@ export default class Contenedor<T extends iContainerElement> implements iContene
     }
 
     async update(object:any):Promise<T>{
-        console.log(`Object received at update: ${JSON.stringify(object)}`)
         object.timestamp="000000"
         const a =  await this.model.findOneAndUpdate({_id:object._id}, {...object}, {new:true})
         console.log(`Update: ${JSON.stringify(a)}`)

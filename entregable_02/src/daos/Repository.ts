@@ -22,7 +22,6 @@ export abstract class Repository<T extends iEntity> {
     }
 
     private async isValid(entity: T): Promise<validationResult> {
-      console.log(this.schema)
         return { valid: await ajv.validate(this.schema, entity), errors: ajv.errors }
     }
 
@@ -54,15 +53,12 @@ export abstract class Repository<T extends iEntity> {
       console.debug(`Repository.update: Using schema ${JSON.stringify(this.schema)}`)
       
       if (ent._id){
-        ent._id = ent._id?.toString()
+        ent._id = ent._id.toString()
       }
-      
-
-      console.log(`${typeof ent._id}`)
       
       console.debug(`Validating ${JSON.stringify(ent)}`)
       try {
-        validationData = await this.isValid(ent)
+        validationData = await this.isValid({...ent})
       } catch (error) {
         console.error(`Validation error: ${error}`)
         console.log(JSON.stringify(validationData == undefined))

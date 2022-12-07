@@ -8,7 +8,7 @@ export interface iCart extends iEntity{
 
 export const schema = {
     type: "object",
-    additionalProperties: false,  /*TO - DO arreglar esto */
+    additionalProperties: true,  /*TO - DO arreglar esto */
     properties: {
     _id: { type: "string" },
     timestamp: { type: "number" },
