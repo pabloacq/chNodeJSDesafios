@@ -1,3 +1,4 @@
+console.clear()
 console.info("Starting... ")
 
 const { HTTPServer, webSocketServer } = require('./services/server')
